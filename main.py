@@ -67,6 +67,12 @@ class HashTable:
             for element in list:
                 self.__setitem__(element.key, element.value)
 
+    def __getitem__(self, key):
+        index = self.hashCode(key)
+        for element in self.__table[index]:
+            if element.key == key:
+                return element.value
+        raise KeyError(f'{key}')
 
 
 
@@ -77,3 +83,7 @@ phones['Alex'] = '9999-3333'
 phones['Alex'] = '1111-3333'
 phones['Ronaldo'] = '9999-5555'
 phones['Gabriel'] = '9999-4444'
+
+print(phones['Steve'])
+print(phones['Alex'])
+print(phones['Ronaldo'])
