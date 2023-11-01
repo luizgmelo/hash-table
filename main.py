@@ -74,6 +74,16 @@ class HashTable:
                 return element.value
         raise KeyError(f'{key}')
 
+    def __str__(self):
+        objString = "{"
+        for list in self.__table:
+            if len(list) > 0:
+                for element in list:
+                    objString += f"'{element.key}': '{element.value}', "
+            
+        return objString[:-2] + objString[-2].replace(',', '}')
+            
+
 
 
 phones = HashTable()
@@ -87,3 +97,5 @@ phones['Gabriel'] = '9999-4444'
 print(phones['Steve'])
 print(phones['Alex'])
 print(phones['Ronaldo'])
+
+print(phones)
