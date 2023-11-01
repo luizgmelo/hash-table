@@ -16,6 +16,12 @@ class HashTable:
         self.__count = 0
         self.__table = [[] for _ in range(self.__capacity)]
 
+        self.__expand_percentage = 0.75
+        self.__reduce_percentage = 0.20
+
+    @property
+    def capacity_percentage_used(self):
+        return self.__count / self.__capacity
 
     def hashCode(self, key):
         strKey = str(key)
@@ -25,6 +31,10 @@ class HashTable:
         return self.__count
 
     def __setitem__(self, key, value):
+        if self.capacity_percentage_used > self.__expand_percentage:
+            new_capacity = self.__capacity * 2
+            self.update(new_capacity)
+        
         index = self.hashCode(key)
         new_element = PairKeyValue(key, value)
         for element in self.__table[index]:
@@ -35,6 +45,10 @@ class HashTable:
         self.__count += 1
 
     def __delitem__(self, key):
+        if self.capacity_percentage_used < self.__reduce_percentage:
+            new_capacity = self.__capacity // 2
+            self.update(new_capacity)
+        
         index = self.hashCode(key)
         for element in self.__table[index]:
             if element.key == key:
@@ -44,7 +58,16 @@ class HashTable:
         
         raise KeyError(f'{key}')
 
-    
+    def update(self, new_capacity):
+        old_table = self.__table
+        self.__count = 0
+        self.__capacity = new_capacity
+        self.__table = [[] for _ in range(new_capacity)]
+        for list in old_table:
+            for element in list:
+                self.__setitem__(element.key, element.value)
+
+
 
 
 phones = HashTable()
@@ -52,8 +75,5 @@ phones['Steve'] = '9999-1111'
 phones['Maria'] = '9999-2222'
 phones['Alex'] = '9999-3333'
 phones['Alex'] = '1111-3333'
-del phones['Alex']
-del phones['Maria']
-del phones['Steve']
-del phones['Alex']
-print()
+phones['Ronaldo'] = '9999-5555'
+phones['Gabriel'] = '9999-4444'
