@@ -1,3 +1,5 @@
+import hashlib
+
 class PairKeyValue:
     def __init__(self, key, value):
         self.key = key
@@ -16,7 +18,7 @@ class HashTable:
 
     def hashCode(self, key):
         strKey = str(key)
-        return hash(strKey) % self.__capacity
+        return int(hashlib.sha256(strKey.encode()).hexdigest(), 16) % self.__capacity
 
     def __len__(self):
         return self.count
