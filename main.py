@@ -83,7 +83,11 @@ class HashTable:
             
         return objString[:-2] + objString[-2].replace(',', '}')
             
-
+    def __iter__(self):
+        for list in self.__table:
+            if len(list) > 0:
+                for element in list:
+                    yield element.key, element.value
 
 
 phones = HashTable()
@@ -99,3 +103,6 @@ print(phones['Alex'])
 print(phones['Ronaldo'])
 
 print(phones)
+
+for name, phone in phones:
+    print(name, phone)
