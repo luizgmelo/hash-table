@@ -77,17 +77,15 @@ class HashTable:
     def __str__(self):
         objString = "{"
         for list in self.__table:
-            if len(list) > 0:
-                for element in list:
-                    objString += f"'{element.key}': '{element.value}', "
+            for element in list:
+                objString += f"'{element.key}': '{element.value}', "
             
         return objString[:-2] + objString[-2].replace(',', '}')
             
     def __iter__(self):
         for list in self.__table:
-            if len(list) > 0:
-                for element in list:
-                    yield element.key, element.value
+            for element in list:
+                yield element.key, element.value
 
 
 phones = HashTable()
